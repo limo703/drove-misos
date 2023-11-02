@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Подписчики</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/simplePage.css}"/>
+</head>
+<body>
+<a href="/hello"><h1>VEDRA from MISOS</h1></a>
+<br/>
+<p th:text="'Подписчики '+ ${person.getUsername()}+':'"></p>
+<div th:each="person : ${person.getSubscribers()}">
+    <a th:text="${person.getUsername()}" th:href="'/'+${person.getId()}"></a>
+    <br/>
+</div>
+<a href="/hello">
+    <input type="submit" value="На главную">
+</a>
+</body>
+</html>

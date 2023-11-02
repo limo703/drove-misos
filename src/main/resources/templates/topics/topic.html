@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Темы</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/simplePage.css}"/>
+</head>
+<body>
+<a href="/hello"><h1>VEDRA from MISOS</h1></a>
+<br/>
+<h3 th:text="${topic.getName()}"></h3>
+<br/>
+<br/>
+<form method="post" th:action="@{/newChapter/{id}(id=${topic.getId()})}" th:object="${newChapter}">
+    <label for="name">Добавить тему: </label>
+    <input type="text" name="name" id="name"/>
+    <input type="submit" value="Опубликовать">
+</form>
+<br/>
+<div th:each="chapter : ${topic.getChapters()}" class="topic-wrapper-new">
+    <a th:href="@{/chapter/{idOfChapter}(idOfChapter=${chapter.getId()})}" th:text="${chapter.getName()}"></a>
+    <br/>
+    <br/>
+</div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Фотографии '+ ${person.getUsername()}"></title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/simplePage.css}"/>
+</head>
+<body>
+<a href="/hello"><h1>VEDRA from MISOS</h1></a>
+<br/>
+<div th:each="img : ${person.getImages()}">
+  <img th:src="'/images/'+${img.getId()}" width="100" height="125" alt="тут должная быть картинка">
+  <p th:text="'Дата добавления: '+${img.getDateOfCreated().toString()}"></p>
+
+    <form th:if="${person.getId()==authPerson.getId()}" th:action="@{/images/delete/{id}(id=${img.getId()})}" method="post" th:object="${img}">
+        <input type="submit" value="Удалить">
+    </form>
+
+</div>
+<br/>
+<a href="/hello">
+  <input type="submit" value="На главную">
+</a>
+</body>
+</html>

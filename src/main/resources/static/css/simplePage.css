@@ -1,0 +1,149 @@
+
+body{
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+}
+h1 {
+    color: #333;
+    text-align: center;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+    background-color: #007bff;
+    overflow: hidden;
+    margin-right: 20px;
+}
+
+li {
+    display: inline;
+    padding: 40px;
+    margin-right: 10px;
+}
+
+li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+li a:hover {
+    background-color: #0056b3;
+}
+
+img {
+    margin: 10px;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+}
+input[type="file"] {
+    font-size: 14px;
+}
+
+h3 {
+    margin-bottom: 10px;
+}
+
+.post {
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.post a {
+    text-decoration: none;
+    font-weight: bold;
+}
+a {
+    text-decoration: none;
+}
+
+.post img {
+    width: 100px;
+    height: 125px;
+}
+
+.post form {
+    display: inline;
+}
+input[type="submit"] {
+    padding: 5px 10px; /* добавляем отступы внутри кнопки */
+    font-size: 14px; /* задаем размер шрифта */
+    background-color: #007bff; /* устанавливаем фоновый цвет кнопки */
+    color: white; /* устанавливаем цвет текста */
+    border: none; /* убираем границу кнопки */
+    cursor: pointer; /* изменяем курсор при наведении на кнопку */
+}
+
+/* стилизация кнопки при наведении */
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* стилизация кнопки при нажатии */
+input[type="submit"]:active {
+    background-color: #007bff;
+}
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    max-width: 15%;
+    max-height: 15%;
+    width: auto;
+    height: auto;
+}
+html, body {
+    margin-left: 20px; /* Пример отступа в 20 пикселей */
+}
+.topic-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+}
+
+.topic-wrapper a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.topic-wrapper a:hover {
+    color:#0056b3;
+    font-weight: bold;
+}
+.topic-wrapper-new {
+    display: flex;
+    justify-content: left;
+}
+
+.topic-wrapper-new a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.topic-wrapper-new a:hover {
+    color:#0056b3;
+    font-weight: bold;
+}
+.inLine h3{
+    display: inline;
+    color: #333;
+}
+.inLineFF h3:hover {
+    color:#0056b3;
+    font-weight: bold;
+}

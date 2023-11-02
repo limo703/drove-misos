@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'id'+${person.getId()}"></title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/simplePage.css}"/>
+</head>
+<body>
+
+<a href="/hello"><h1>VEDRA from MISOS</h1></a>
+<hr/>
+<div th:each="img : ${person.getImages()}">
+    <img th:if="${img.isPreviewImage()}" th:src="'/images/'+${img.getId()}" alt="тут должная быть картинка">
+</div>
+<form th:if="${person.getId() == authPerson.getId()}" method="post" th:action="@{/changeImage}" enctype="multipart/form-data">
+    <label>Фотография профиля: </label>
+    <input type="file" name="file" required accept="image/*,image/jpeg"><br/>
+    <input type="submit" value="Установить">
+</form>
+
+
+<p th:text="${person.getUsername()}"></p>
+
+<a th:href="'/'+${person.getId()}+'/subscribers'">
+    <input type="submit" th:value="'Подписчики: '+${person.getSubscribers().size()+' '}">
+</a>
+<a th:href="'/'+${person.getId()}+'/subscriptions'">
+    <input type="submit" th:value="'Подписки: '+${person.getSubscriptions().size()+' '}">
+</a>
+<br/>
+<br/>
+
+<div th:if="${!checkOnCub}">
+    <form th:if="${person.getId() != authPerson.getId()}" th:method="post" th:action="@{/subscribe/{id}(id=${person.getId()})}" th:object="${person}">
+    <input type="submit" value="Подписаться!">
+    </form>
+</div>
+<div th:if="${checkOnCub}">
+    <form th:if="${person.getId() != authPerson.getId()}" th:method="post" th:action="@{/unsubscribe/{id}(id=${person.getId()})}" th:object="${person}">
+        <input type="submit" value="Отказаться от подписки">
+    </form>
+</div>
+
+<p th:text="'Автомобиль: '+${person.getBrand()} +' '+ ${person.getModel()}+' '+${person.getYearOfRelease()}"></p>
+<p th:if="${person.getTimeOfRegister()}" th:text="${'Дата регистрации: '+person.getTimeOfRegister().toString()}"></p>
+
+<p th:if="${person.getDescription()}" th:text="${person.getDescription()}"></p>
+<a th:href="@{/photos/{id}(id=${person.getId()})}">
+    <input type="submit" value="Галерея">
+</a>
+<form th:if="${person.getId() == authPerson.getId()}" th:method="POST" th:action="@{/description/{id}(id = ${person.getId()})}" th:object="${person}">
+    <label for="description">Изменить описание: </label>
+    <input type="text" th:field="*{description}" id="description"/>
+    <div style="color:red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">description Error</div>
+    <input type="submit" value="Принять">
+</form>
+<br/>
+
+<br/>
+<br/>
+
+
+<form th:if="${person.getId() == authPerson.getId()}" th:action="@{/newPost}" th:method="post" th:object="${post}" enctype="multipart/form-data">
+    <label for="text">Хотите поделиться чем-то новым? </label>
+    <input type="text" name="text" id="text"/>
+    <br/>
+    <label for="files">Добавить фото:</label>
+    <input type="file" name="files[]" id="files" multiple accept="image/*,image/jpeg">
+    <input type="submit" value="Опубликовать">
+</form>
+
+<br/>
+
+<div th:if="${person.getPosts().isEmpty()}">
+    <span>Камрад не опубликовал ни одного поста;(</span>
+</div>
+<div th:if="${!person.getPosts().isEmpty()}">
+    <p text="Публикации:"></p>
+    <div th:each="post : ${person.getPosts()}">
+        <div th:if="${post.chapter == null}">
+        <div th:each="image : ${post.getImages()}">
+            <img th:src="'/images/'+${image.getId()}" alt="тут должная быть картинка">
+        </div>
+        <a th:text="${post.getTimeOfPost().toString()}+' '+${post.getText()}"></a>
+        <form th:if="${person.getId() == authPerson.getId()}" th:action="@{/delPost/{postId}(postId=${post.getId()})}"  th:method="post">
+            <input type="submit" value="Удалить" >
+        </form>
+        <form th:if="${person.getId() != authPerson.getId()}" th:action="@{/rePost/{id}/{postId}(id=${person.getId()},postId =${post.getId()})}"  th:method="post">
+            <input type="submit" value="Репост" >
+        </form>
+        <br/>
+    </div>
+    </div>
+</div>
+<br/>
+
+<a href="/hello">
+    <input type="submit" value="На главную">
+</a>
+<br/>
+</body>
+</html>

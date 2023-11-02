@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/simplePage.css}"/>
+</head>
+<body>
+<a href="/hello"><h1>VEDRA from MISOS</h1></a>
+<br/>
+<form th:method="POST" th:action="@{/search}">
+    <label for="query">Введите имя пользователя </label>
+    <input type="text" id="query" name="query"/>
+    <br/>
+    <input type="submit" value="Искать!"/>
+</form>
+<br/>
+<br/>
+<div th:if="${people}">
+    <div th:if="${people.isEmpty()}">
+        <span>Пользователей не найдено</span>
+    </div>
+    <div th:each="person : ${people}">
+        <a th:text="${person.getUsername()}+' '"></a>
+        <a th:href="'/'+${person.getId()}">
+            <input type="submit" value="Перейти">
+        </a>
+        <br/>
+        <br/>
+    </div>
+</div>
+<br/>
+<br/>
+<a href="/hello">
+    <input type="submit" value="На главную">
+</a>
+</body>
+</html>

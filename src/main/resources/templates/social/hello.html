@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/simplePage.css}"/>
+</head>
+<body>
+<h1>VEDRA from MISOS</h1>
+
+<form th:action="@{/logout}" th:method="POST" id="form1">
+</form>
+<ul>
+    <li>
+        <a th:href="'/'+${person.getId()}" >Мой профиль</a>
+    </li>
+    <li>
+        <a href="/search">
+            Поиск камрада
+        </a>
+    </li>
+
+    <li>
+
+        <a href="#" onclick="document.getElementById('form1').submit(); return false;">Выйти из аккаунта</a>
+    </li>
+</ul>
+
+<br/>
+
+<div th:each="topic : ${topics}" class="topic-wrapper">
+    <a th:href="@{/topic/{id}(id=${topic.getId()})}" th:text="${topic.getName()}"></a>
+    <br>
+</div>
+
+<form th:action="@{/newPost}" th:method="post" th:object="${post}" enctype="multipart/form-data">
+    <label for="text">Хотите поделиться чем-то новым? </label>
+    <input type="text" name="text" id="text"/>
+    <br/>
+    <br/>
+    <label for="files">Добавить фото:</label>
+    <input type="file" name="files[]" id="files" multiple accept="image/*,image/jpeg">
+    <input type="submit" value="Опубликовать">
+</form>
+
+<br/>
+<br/>
+
+<h3>Все посты:</h3>
+
+<div th:each="post : ${posts}">
+    <div th:if="${post.chapter == null}">
+    <div th:each="image : ${post.getImages()}">
+        <img th:src="@{/images/{id}(id=${image.getId()})}" alt="тут должная быть картинка">
+    </div>
+    <a th:text="${post.getTimeOfPost()}+' '"></a>
+    <a th:text="${post.getWriter().getUsername()}" th:href="'/'+${post.getWriter().getId()}+' '"></a>
+    <a th:text="${post.getText()}"></a>
+
+    <form th:if="${person.getId() == post.getWriter().getId()}" th:action="@{/delPost/{postId}(postId=${post.getId()})}" method="post">
+        <input type="submit" value="Удалить" >
+    </form>
+    <form th:if="${person.getId() != post.getWriter().getId()}" th:action="@{/rePost/{id}/{postId}(id=${post.getWriter().getId()} , postId=${post.getId()})}" method="post">
+        <input type="submit" value="Репост" >
+    </form>
+    <br/>
+    </div>
+</div>
+
+</body>
+</html>

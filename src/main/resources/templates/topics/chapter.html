@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Обсуждение</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/simplePage.css}"/>
+</head>
+<body>
+<a href="/hello"><h1>VEDRA from MISOS</h1></a>
+<br/>
+<div class="inLine">
+    <a class="inLineFF" th:href="@{/topic/{id}(id=${chapter.getTopic().getId()})}"> <h3 th:text="${chapter.getTopic().getName()}"></h3></a>
+    <h3 th:text="' -> '+${chapter.getName()}"></h3>
+</div>
+
+<br/>
+<form th:action="@{/newPostInChapter/{idOfChapter}(idOfChapter=${idOfChapter})}" th:method="post" th:object="${newPost}" enctype="multipart/form-data">
+    <label for="text">Разбираешься в вопросе? Пиши! </label>
+    <input type="text" name="text" id="text"/>
+    <br/>
+    <label for="files">Добавить фото:</label>
+    <input type="file" name="files[]" id="files" multiple accept="image/*,image/jpeg">
+    <input type="submit" value="Опубликовать">
+</form>
+<br/>
+
+<div th:each="post : ${chapter.getPosts()}">
+    <div th:each="image : ${post.getImages()}">
+        <img th:src="'/images/'+${image.getId()}" alt="тут должная быть картинка">
+    </div>
+    <a th:text="${post.getWriter().getUsername()}" th:href="'/'+${post.getWriter().getId()}+' '"></a>
+    <a th:text="${post.getTimeOfPost().toString()}+' '+${post.getText()}"></a>
+    <br/>
+</div>
+
+</body>
+</html>
